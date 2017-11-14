@@ -18,3 +18,4 @@ $ docker run -it lobstr
 
 - https://github.com/mgymrek/lobstr-code/releases/tag/v4.0.6
 - http://lobstr.teamerlich.org/install.html#source
+- http://bedtools.readthedocs.io/en/latest/content/installation.html

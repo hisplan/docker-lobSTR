@@ -3,6 +3,7 @@ FROM ubuntu:16.04
 LABEL maintainer="Jaeyoung Chun (jaeyoung.chun@weizmann.ac.il)"
 
 ENV LOBSTR_VERSION="4.0.6"
+ENV BEDTOOLS_VERSION="2.25.0"
 
 # install dependencies required for lobSTR
 # pyfast, numpy are required for scripts/lobstr_index.py, scripts/GetSTRInfo.py
@@ -22,6 +23,16 @@ RUN wget https://github.com/mgymrek/lobstr-code/releases/download/v${LOBSTR_VERS
     && make \
     && make check \
     && make install
+
+# build/install bedtools
+RUN wget https://github.com/arq5x/bedtools2/releases/download/v${BEDTOOLS_VERSION}/bedtools-${BEDTOOLS_VERSION}.tar.gz \
+    && tar xvzf bedtools-${BEDTOOLS_VERSION}.tar.gz \
+    && cd bedtools2 \
+    && make \
+    && cp bin/* /usr/local/bin/
+
+# clean up
+RUN rm -rf /tmp/bedtools-${BEDTOOLS_VERSION}.tar.gz lobSTR-${LOBSTR_VERSION}.tar.gz
 
 WORKDIR /root
 ENTRYPOINT ["/usr/local/bin/lobSTR"]
